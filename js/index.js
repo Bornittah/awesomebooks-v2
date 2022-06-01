@@ -65,8 +65,9 @@ class Books {
     const data = JSON.parse(localStorage.getItem('booklist'));
 
     let str = '';
-    if (JSON.parse(localStorage.getItem('booklist')) === null || data.length === 0) {
-      str = '<li class="list-item">No book stored!</li>';
+    if (data === null || data.length === 0) {
+      str = `<li class="list-item">No book stored!</li>`;
+      console.log('data empty')
     } else {
       data.forEach((book) => {
         str += `<li class="list-item">
@@ -75,8 +76,8 @@ class Books {
         </li>`;
       });
 
-      booklist.innerHTML = str;
     }
+    booklist.innerHTML = str;
   }
 
   static removebook(id) {
