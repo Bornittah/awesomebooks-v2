@@ -8,7 +8,8 @@ let addMenuLink = document.querySelector('#addbooks');
 let contactMenuLink = document.querySelector('#contact');
 
 document.querySelectorAll('.navbar').forEach((link)=>{
-  link.addEventListener('click', ()=>{
+  link.addEventListener('click', (e)=>{
+    e.preventDefault();
     listMenuLink.addEventListener('click', ()=>{
       listSection.style.display='block';
       addSection.style.display='none';
@@ -31,10 +32,17 @@ document.querySelectorAll('.navbar').forEach((link)=>{
 });
 
 // storage
-  class Books {
+let titleInput = document.querySelector('#title-input');
+let authorInput = document.querySelector('#author-input');
+class Books {
     constructor(title, author){
       this.title=title;
       this.author=author;
+    }
+
+    clearfields() {
+      titleInput.value = '';
+      authorInput.value = '';
     }
 
     addbook(){
@@ -42,7 +50,7 @@ document.querySelectorAll('.navbar').forEach((link)=>{
         'title': this.title.value,
         'author': this.author.value
       };
-    console.log(book)
+
       let books = [];
       if (JSON.parse(localStorage.getItem('booklist')) === null) {
         books.push(book);
@@ -87,13 +95,13 @@ document.querySelectorAll('.navbar').forEach((link)=>{
     }
   }
 
-  let titleInput = document.querySelector('#title-input');
-  let authorInput = document.querySelector('#author-input');
-  
   let bk = new Books(titleInput,authorInput);
 
   document.getElementById('form').addEventListener('submit', (e)=>{
-  bk.addbook();
+    e.preventDefault();
+    bk.addbook();
+    bk.clearfields();
+    bk.fetchbooks();
   });
 
   bk.fetchbooks();
@@ -101,6 +109,7 @@ document.querySelectorAll('.navbar').forEach((link)=>{
   document.querySelectorAll('#remove-book').forEach((button, id)=>{
     button.addEventListener('click', (e)=>{
     bk.removebook(id);
+    bk.fetchbooks();
   })
 });
 
