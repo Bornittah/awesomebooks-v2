@@ -38,12 +38,12 @@ class Books {
     this.author = author;
   }
 
-  clearfields() {
+  static clearfields() {
     document.querySelector('#title-input').value = '';
     document.querySelector('#author-input').value = '';
   }
 
-   addbook() {
+  addbook() {
     const book = {
       title: this.title.value,
       author: this.author.value,
@@ -60,7 +60,7 @@ class Books {
     }
   }
 
-  fetchbooks() {
+  static fetchbooks() {
     const booklist = document.querySelector('.list');
     const data = JSON.parse(localStorage.getItem('booklist'));
 
@@ -68,19 +68,18 @@ class Books {
     if (JSON.parse(localStorage.getItem('booklist')) === null || data.length === 0) {
       str = '<li class="list-item">No book stored!</li>';
     } else {
-      data.forEach((book)=> {
+      data.forEach((book) => {
         str += `<li class="list-item">
           <p>${book.title} by ${book.author}</p>
           <a href="" class="remove-btn" id="remove-book">Remove</a>
         </li>`;
-      })
+      });
 
       booklist.innerHTML = str;
-  }
-    
+    }
   }
 
-  removebook(id) {
+  static removebook(id) {
     let data = JSON.parse(localStorage.getItem('booklist'));
     const selectedbook = data[id];
     const filteredBooks = data.filter((item) => item !== selectedbook);
@@ -95,15 +94,15 @@ const bk = new Books(titleInput, authorInput);
 document.getElementById('form').addEventListener('submit', (e) => {
   e.preventDefault();
   bk.addbook();
-  bk.clearfields();
-  bk.fetchbooks();
+  Books.clearfields();
+  Books.fetchbooks();
 });
 
-bk.fetchbooks();
+Books.fetchbooks();
 
 document.querySelectorAll('#remove-book').forEach((button, id) => {
   button.addEventListener('click', () => {
-    bk.removebook(id);
-    bk.fetchbooks();
+    Books.removebook(id);
+    Books.fetchbooks();
   });
 });
