@@ -38,12 +38,12 @@ class Books {
     this.author = author;
   }
 
-  static clearfields() {
+  clearfields() {
     document.querySelector('#title-input').value = '';
     document.querySelector('#author-input').value = '';
   }
 
-  addbook() {
+   addbook() {
     const book = {
       title: this.title.value,
       author: this.author.value,
@@ -60,7 +60,7 @@ class Books {
     }
   }
 
-  static fetchbooks() {
+  fetchbooks() {
     const booklist = document.querySelector('.list');
     const data = JSON.parse(localStorage.getItem('booklist'));
 
@@ -68,17 +68,19 @@ class Books {
     if (JSON.parse(localStorage.getItem('booklist')) === null || data.length === 0) {
       str = '<li class="list-item">No book stored!</li>';
     } else {
-      for (const obj of data) {
+      data.forEach((book)=> {
         str += `<li class="list-item">
-          <p>${obj.title} by ${obj.author}</p>
+          <p>${book.title} by ${book.author}</p>
           <a href="" class="remove-btn" id="remove-book">Remove</a>
         </li>`;
-      }
-    }
-    booklist.innerHTML = str;
+      })
+
+      booklist.innerHTML = str;
+  }
+    
   }
 
-  static removebook(id) {
+  removebook(id) {
     let data = JSON.parse(localStorage.getItem('booklist'));
     const selectedbook = data[id];
     const filteredBooks = data.filter((item) => item !== selectedbook);
