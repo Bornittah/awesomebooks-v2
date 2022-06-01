@@ -66,8 +66,7 @@ class Books {
 
     let str = '';
     if (data === null || data.length === 0) {
-      str = `<li class="list-item">No book stored!</li>`;
-      console.log('data empty')
+      str = '<li class="list-item">No book stored!</li>';
     } else {
       data.forEach((book) => {
         str += `<li class="list-item">
@@ -75,7 +74,6 @@ class Books {
           <a href="" class="remove-btn" id="remove-book">Remove</a>
         </li>`;
       });
-
     }
     booklist.innerHTML = str;
   }
